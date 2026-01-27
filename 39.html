@@ -1,0 +1,102 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>content-gallery h5 template</title>
+    <style>
+      * {
+        margin: 0;
+      }
+
+      body {
+        background-color: transparent;
+      }
+
+      .cover {
+        position: fixed;
+        width: 100vw;
+        bottom: 0;
+        top: 0;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #close {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 36px;
+        height: 36px;
+        z-index: 5;
+      }
+
+      .container {
+        width: 100vw;
+        height: 213vw;
+        max-height: 100vh;
+        position: relative;
+      }
+
+      video {
+        width: 100%;
+      }
+
+      #video2 {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="./images/background0.png" style="width: 100vw" />
+    <img src="./images/background1.png" style="width: 100vw" />
+    <img src="./images/background2.png" style="width: 100vw" />
+    <div class="cover" id="ad">
+      <img src="./images/close.png" id="close" onclick="closeOnClick()" />
+      <div class="container">
+        <video muted playsinline autoplay id="video" onclick="openAd()">
+          <source src="./images/39/1.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </body>
+  <script>
+    const ad = document.getElementById("ad");
+    const video = document.getElementById("video");
+    const firstCutDuration = 3;
+
+    setTimeout(() => {
+      // mute button 已移除，這裡不再顯示任何按鈕
+    }, firstCutDuration * 1000);
+
+    video.addEventListener("ended", () => {
+      video.currentTime = firstCutDuration;
+      video.play();
+    });
+
+    const closeOnClick = () => {
+      ad.remove();
+    };
+
+    const openAd = () => {
+      window.open("https://www.pecos.com.tw/brands-%E6%96%B0%E6%84%9F%E8%A6%BA.html");
+    };
+
+      let hasLoopStarted = false;
+
+      // 第一次播放完畢，從第 5 秒開始無限播放
+      video.addEventListener("ended", () => {
+        if (!hasLoopStarted) {
+          hasLoopStarted = true;
+        }
+        // 每次播放完跳回第 5 秒並再次播放（手動模擬 loop）
+        video.currentTime = 5;
+        video.play();
+      });
+    </script>
+  </body>
+</html>
