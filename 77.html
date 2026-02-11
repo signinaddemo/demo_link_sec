@@ -113,12 +113,13 @@
     const circle = document.getElementById("circle");
     const videoContainer = document.getElementById("videoContainer");
     const RADIUS = window.screen.width * 0.18;
-    const timer = 8; // 進入第二 cut 之後多久自動切換到第三 cut
+    const timer = 5; // 進入第二 cut 之後多久自動切換到第三 cut
 
     video1.addEventListener("ended", (event) => {
       video2.style.display = "block";
       circle.style.display = "block";
       spoon.style.display = "block";
+      video1.remove();
       banner.addEventListener("touchmove", function (e) {
         const touch = e.touches[0];
         const x = touch.clientX;
@@ -134,7 +135,6 @@
         video3.style.display = "block";
         setTimeout(() => {
           video3.onclick = openAd;
-          video1.remove();
           video2.remove();
         }, 100);
       }, timer * 1000);
