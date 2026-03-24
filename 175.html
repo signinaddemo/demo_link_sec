@@ -175,7 +175,7 @@
         const topImage = document.getElementById(`top_${i}`);
         topImage.style.display = i === index ? "block" : "none";
         if (i !== index) {
-          newSlides += `<div class="swiper-slide bottom_${i}" onclick="updateIndex(${i})"><img src='./images/175/${i}.jpg' alt='' /></div>`;
+          newSlides += `<div class="swiper-slide bottom_${i}" onclick="updateIndex(${i})"><img src='./images/175/${i}.png' alt='' /></div>`;
         }
       }
       swiper.slidesEl.innerHTML = `${newSlides}${newSlides}`;
