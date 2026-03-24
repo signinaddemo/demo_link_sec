@@ -4,23 +4,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>content-gallery h5 template</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <style>
-      * {
-        margin: 0;
-      }
-
+      * { margin: 0; }
       body {
         background-color: transparent;
         display: flex;
         flex-direction: column;
         align-items: center;
       }
-
       .container {
         width: 320px;
         height: 480px;
@@ -29,12 +22,10 @@
         padding: 1px;
         box-sizing: border-box;
       }
-
       .topImage {
         display: none;
         width: 100%;
       }
-
       .bottom {
         position: relative;
         width: 318px;
@@ -42,14 +33,12 @@
         display: flex;
         justify-content: center;
       }
-
       #bottomImage {
         position: absolute;
         z-index: -1;
         width: 100%;
         height: 100%;
       }
-
       #arrowLeft {
         position: absolute;
         width: 24px;
@@ -57,7 +46,6 @@
         left: 4px;
         z-index: 100;
       }
-
       #arrowRight {
         position: absolute;
         width: 24px;
@@ -65,36 +53,25 @@
         right: 4px;
         z-index: 100;
       }
-
       .swiper-container {
         width: 250px;
         height: 116px;
         margin-top: 8px;
         z-index: 10;
       }
-
       .swiper-slide {
         width: 116px;
         height: 116px;
         opacity: 0;
       }
-
       .swiper-slide img {
         width: 100%;
       }
-
-      .swiper-slide-visible {
-        opacity: 1;
-      }
-
-      .swiper-slide-prev {
-        opacity: 1;
-      }
-
+      .swiper-slide-visible,
+      .swiper-slide-prev,
       .swiper-slide-next {
         opacity: 1;
       }
-
       #outline {
         position: absolute;
         top: 0;
@@ -105,7 +82,7 @@
       }
     </style>
   </head>
-  <SCRIPT language='JavaScript1.1' SRC="https://ad.doubleclick.net/ddm/trackimpj/N49701.4719235SIGNINAD/B33588306.420394271;dc_trk_aid=612852290;dc_trk_cid=234350755;ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;gdpr=${GDPR};gdpr_consent=${GDPR_CONSENT_755};gpp=${GPP_STRING_755};gpp_sid=${GPP_SID};ltd=;dc_tdv=1?" attributionsrc ></SCRIPT><SCRIPT TYPE="application/javascript" SRC="https://pixel.adsafeprotected.com/rjss/st/2471560/87148436/skeleton.js"></SCRIPT> <NOSCRIPT><IMG SRC="https://pixel.adsafeprotected.com/rfw/st/2471560/87148432/skeleton.gif?gdpr=${GDPR}&gdpr_consent=${GDPR_CONSENT_278}&gdpr_pd=${GDPR_PD}" BORDER=0 WIDTH=1 HEIGHT=1 ALT=""></NOSCRIPT>
+  <SCRIPT language='JavaScript1.1' SRC="https://ad.doubleclick.net/ddm/trackimpj/N49701.4719235SIGNINAD/B33588306.420394268;dc_trk_aid=612852287;dc_trk_cid=234350752;ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;gdpr=${GDPR};gdpr_consent=${GDPR_CONSENT_755};gpp=${GPP_STRING_755};gpp_sid=${GPP_SID};ltd=;dc_tdv=1?" attributionsrc ></SCRIPT><SCRIPT TYPE="application/javascript" SRC="https://pixel.adsafeprotected.com/rjss/st/2471560/87148423/skeleton.js"></SCRIPT> <NOSCRIPT><IMG SRC="https://pixel.adsafeprotected.com/rfw/st/2471560/87148416/skeleton.gif?gdpr=${GDPR}&gdpr_consent=${GDPR_CONSENT_278}&gdpr_pd=${GDPR_PD}" BORDER=0 WIDTH=1 HEIGHT=1 ALT=""></NOSCRIPT>
   <body>
     <img src="./images/background0.png" style="width: 100vw" />
     <img src="./images/background1.png" style="width: 100vw" />
@@ -139,34 +116,26 @@
       </div>
       <div class="bottom">
         <img src="./images/175/B.png" alt="" id="bottomImage" />
-        <img
-          src="./images/175/arrowLeft.png"
-          id="arrowLeft"
-          onclick="slidePrev()"
-        />
-        <img
-          src="./images/175/arrowRight.png"
-          id="arrowRight"
-          onclick="slideNext()"
-        />
+        <img src="./images/175/arrowLeft.png" id="arrowLeft" onclick="slidePrev()" />
+        <img src="./images/175/arrowRight.png" id="arrowRight" onclick="slideNext()" />
         <div class="swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide" class="bottom_2" onclick="updateIndex(2)">
+            <div class="swiper-slide bottom_2" onclick="updateIndex(2)">
               <img src="./images/175/2.png" alt="" />
             </div>
-            <div class="swiper-slide" class="bottom_3" onclick="updateIndex(3)">
+            <div class="swiper-slide bottom_3" onclick="updateIndex(3)">
               <img src="./images/175/3.png" alt="" />
             </div>
-            <div class="swiper-slide" class="bottom_4" onclick="updateIndex(4)">
+            <div class="swiper-slide bottom_4" onclick="updateIndex(4)">
               <img src="./images/175/4.png" alt="" />
             </div>
-            <div class="swiper-slide" class="bottom_2" onclick="updateIndex(2)">
+            <div class="swiper-slide bottom_2" onclick="updateIndex(2)">
               <img src="./images/175/2.png" alt="" />
             </div>
-            <div class="swiper-slide" class="bottom_3" onclick="updateIndex(3)">
+            <div class="swiper-slide bottom_3" onclick="updateIndex(3)">
               <img src="./images/175/3.png" alt="" />
             </div>
-            <div class="swiper-slide" class="bottom_4" onclick="updateIndex(4)">
+            <div class="swiper-slide bottom_4" onclick="updateIndex(4)">
               <img src="./images/175/4.png" alt="" />
             </div>
           </div>
@@ -196,24 +165,17 @@
       },
     });
 
-    const slideNext = () => {
-      swiper.slideNext();
-    };
-
-    const slidePrev = () => {
-      swiper.slidePrev();
-    };
+    const slideNext = () => swiper.slideNext();
+    const slidePrev = () => swiper.slidePrev();
 
     const updateIndex = (newIndex) => {
       index = newIndex;
       let newSlides = "";
-      for (let i = 1; i < maxIndex + 1; i++) {
+      for (let i = 1; i <= maxIndex; i++) {
         const topImage = document.getElementById(`top_${i}`);
-        if (i === index) {
-          topImage.style.display = "block";
-        } else {
-          topImage.style.display = "none";
-          newSlides += `<div class="swiper-slide" class="bottom_${i}" onclick="updateIndex(${i})"><img src='./images/792/${i}.jpg' alt='' /></div>`;
+        topImage.style.display = i === index ? "block" : "none";
+        if (i !== index) {
+          newSlides += `<div class="swiper-slide bottom_${i}" onclick="updateIndex(${i})"><img src='./images/175/${i}.jpg' alt='' /></div>`;
         }
       }
       swiper.slidesEl.innerHTML = `${newSlides}${newSlides}`;
