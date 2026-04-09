@@ -41,15 +41,7 @@
         position: relative;
       }
 
-      #button {
-        position: absolute;
-        width: 8vw;
-        height: 8vw;
-        top: 45vw;
-        right: 12px;
-        z-index: 5;
-        display: none;
-      }
+      /* 移除了 #button 的 CSS 樣式 */
 
       video {
         position: absolute;
@@ -70,11 +62,7 @@
     <div class="cover" id="ad">
       <div class="container">
         <img src="./images/13/close.svg" id="close" onclick="closeOnClick()" />
-        <img
-          onclick="muteButtonOnClick()"
-          src="./images/mute.png"
-          id="button"
-        />
+        
         <video muted playsinline autoplay id="video" onclick="openAd()">
           <source src="./images/207/1.mp4" type="video/mp4" />
           Your browser does not support the video tag.
@@ -85,12 +73,9 @@
   <script>
     const ad = document.getElementById("ad");
     const video = document.getElementById("video");
-    const button = document.getElementById("button");
     const firstCutDuration = 0;
 
-    setTimeout(() => {
-      button.style.display = "block";
-    }, firstCutDuration * 1000);
+    // 移除了控制按鈕顯示的 setTimeout
 
     video.addEventListener("ended", () => {
       video.currentTime = firstCutDuration;
@@ -105,9 +90,6 @@
       window.open("https://www.kuangchuan.com/Product/FunctionalDrink");
     };
 
-    const muteButtonOnClick = () => {
-      video.muted = !video.muted;
-      button.src = `./images/${video.muted ? "mute" : "volume"}.png`;
-    };
+    // 移除了 muteButtonOnClick 函式
   </script>
 </html>
