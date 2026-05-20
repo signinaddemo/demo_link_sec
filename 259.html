@@ -1,42 +1,76 @@
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>content-gallery h5 template</title>
+    <style>
+      * {
+        margin: 0;
+      }
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>content-gallery h5 template</title>
-  <style>
-    * {
-      margin: 0;
-    }
+      body {
+        background-color: transparent;
+      }
 
-    body {
-      background-color: transparent;
-    }
+      .cover {
+        position: fixed;
+        width: 100vw;
+        bottom: 0;
+        top: 0;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-    .swiper-slide-img {
-      width: 100%;
-      padding: 5px;
-      box-sizing: border-box;
-    }
+      #close {
+        position: relative;
+        top: 66%;
+        left: 12px;
+        width: 36px;
+        height: 36px;
+        z-index: 5;
+      }
 
-  </style>
-</head>
-<body>
-<img src="./images/background0.png" style="width: 100vw;" />
-<img src="./images/background1.png" style="width: 100vw;" />
-<div id="ad-wrapper">
-  <div onclick="openUrl()">
-    <div>
-      <img class="swiper-slide-img" src="./images/259/1.mp4" alt="" >
+      .container {
+        width: 100vw;
+        height: 213vw;
+        max-height: 100vh;
+        position: relative;
+      }
+
+      #banner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="./images/background0.png" style="width: 100vw" />
+    <img src="./images/background1.png" style="width: 100vw" />
+    <img src="./images/background2.png" style="width: 100vw" />
+    <div class="cover" id="ad">
+      <div class="container">
+        <img src="./images/259/close.svg" id="close" onclick="closeOnClick()" />
+        <img src="./images/259/1.mp4" alt="" id="banner" />
+      </div>
     </div>
-  </div>
-</div>
-<img src="./images/background2.png" style="width: 100vw;" />
-</body>
-<script>
-  function openUrl(){
-    window.open('https://www.mcdonalds.com/tw/zh-tw/whats-hot/0527bbq_season_ft_hutong_mcdonalds.html?utm_source=signin&utm_medium=display&utm_campaign=cp~np-bbqseason_sd~2026-05-27&utm_content=at~ban_cv~signin');
-  }
-</script>
+  </body>
+  <script>
+    const ad = document.getElementById("ad");
+
+    const closeOnClick = () => {
+      ad.remove();
+    };
+
+    const openAd = () => {
+      window.open("https://www.mcdonalds.com/tw/zh-tw/whats-hot/0527bbq_season_ft_hutong_mcdonalds.html?utm_source=signin&utm_medium=display&utm_campaign=cp~np-bbqseason_sd~2026-05-27&utm_content=at~ban_cv~signin");
+    };
+  </script>
 </html>
