@@ -16,7 +16,7 @@
         width: 100%;
       }
 
-      #bannerImg {
+      #video {
         width: 100%;
       }
 
@@ -34,12 +34,17 @@
     <img src="./images/background1.png" style="width: 100vw" />
     <img src="./images/background2.png" style="width: 100vw" />
     <div id="banner">
-      <img
-        id="bannerImg"
-        src="./images/285/1.mp4"
-        alt=""
+      <video
+        loop
+        muted
+        playsinline
+        autoplay
+        id="video"
         onclick="openUrl('https://signinad.com/')"
-      />
+      >
+        <source src="./images/285/1.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
       <img src="./images/close.png" alt="" id="close" onclick="closeAd()" />
     </div>
   </body>
