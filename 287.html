@@ -107,24 +107,27 @@
       }
     }
     window.removeEventListener('scroll', scrollListener)
-    video.play()
-    adContainer.style.height = 'calc(150vw - 1px)'
-    image2.style.left = '0'
+video.play()
+adContainer.style.height = 'calc(150vw - 1px)'
+image2.style.left = '0'
+
+setTimeout(() => {
+  const gif = document.getElementById('gif');
+  gif.style.display = 'block'
+  gif.src = './images/287/1.mp4'
+  gif.style.zIndex = '100'
+  
+  gif.addEventListener('ended', () => {
+    gif.style.opacity = 0
+    
     setTimeout(() => {
-      const gif = document.getElementById('gif');
-      gif.style.display = 'block'
-      gif.src = './images/287/1.mp4'
-      gif.style.zIndex = '100'
-      setTimeout(() => {
-        gif.style.opacity = 0
-        setTimeout(() => {
-          gif.style.display = 'none'
-          window.addEventListener('scroll', checkVideo);
-          video.play()
-          muteButton.style.opacity = '1'
-        }, 0)
-      }, 5000);
-    }, 0) // 開啟的延遲時間
+      gif.style.display = 'none'
+      window.addEventListener('scroll', checkVideo);
+      video.play()
+      muteButton.style.opacity = '1'
+    }, 0)
+  }, { once: true }); 
+}, 0) // 開啟的延遲時間
   }
 
   function checkVideo() {
