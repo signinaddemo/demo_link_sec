@@ -1,59 +1,50 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>content-gallery h5 template</title>
     <style>
       * {
         margin: 0;
-        padding: 0;
-        box-sizing: border-box;
       }
-      html, body {
-        width: 100%;
-        height: 100%;
+
+      body {
         background-color: transparent;
-        overflow: hidden;
       }
+
       .cover {
         position: fixed;
         width: 100vw;
         bottom: 0;
         top: 0;
         height: 100vh;
-        height: 100dvh; /* 現代手機瀏覽器動態視窗高度,修正網址列造成的裁切問題 */
         background: rgba(0, 0, 0, 0.7);
         display: flex;
         align-items: center;
         justify-content: center;
       }
+
       #close {
         position: absolute;
         top: 12px;
-        left: 12px;
-        width: 30px;
-        height: 30px;
+        right: 12px;
+        width: 36px;
+        height: 36px;
         z-index: 5;
-        cursor: pointer;
       }
+
       .container {
         width: 100vw;
         height: 213vw;
         max-height: 100vh;
-        max-height: 100dvh;
         position: relative;
-        background-color: #000; /* 影片載入前避免透空 */
       }
+
       video {
-        position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
-        height: 100%;
-        object-fit: contain;
       }
+
       #video2 {
         display: none;
       }
@@ -64,19 +55,9 @@
     <img src="./images/background1.png" style="width: 100vw" />
     <img src="./images/background2.png" style="width: 100vw" />
     <div class="cover" id="ad">
+      <img src="./images/close.png" id="close" onclick="closeOnClick()" />
       <div class="container">
-        <img src="./images/13/close.svg" id="close" onclick="closeOnClick()" />
-
-        <video
-          muted
-          playsinline
-          webkit-playsinline
-          x5-playsinline
-          autoplay
-          preload="auto"
-          id="video"
-          onclick="openAd()"
-        >
+        <video muted playsinline autoplay id="video" onclick="openAd()">
           <source src="./images/365/1.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -86,30 +67,11 @@
   <script>
     const ad = document.getElementById("ad");
     const video = document.getElementById("video");
-    const firstCutDuration = 0;
+    const firstCutDuration = 3;
 
-    // 確保部分手機瀏覽器(尤其是 in-app WebView)能正確靜音自動播放
-    video.muted = true;
-    video.setAttribute("muted", "");
-
-    function tryPlay() {
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((err) => {
-          console.log("Autoplay blocked, retry on user interaction:", err);
-          // 若自動播放被擋下,改為使用者第一次觸控時播放
-          const resumeOnTouch = () => {
-            video.play();
-            document.removeEventListener("touchstart", resumeOnTouch);
-            document.removeEventListener("click", resumeOnTouch);
-          };
-          document.addEventListener("touchstart", resumeOnTouch, { once: true });
-          document.addEventListener("click", resumeOnTouch, { once: true });
-        });
-      }
-    }
-
-    window.addEventListener("DOMContentLoaded", tryPlay);
+    setTimeout(() => {
+      // mute button 已移除，這裡不再顯示任何按鈕
+    }, firstCutDuration * 1000);
 
     video.addEventListener("ended", () => {
       video.currentTime = firstCutDuration;
@@ -123,5 +85,18 @@
     const openAd = () => {
       window.open("https://www.facebook.com/RoseBeautyTW/?locale=zh_TW");
     };
-  </script>
+
+      let hasLoopStarted = false;
+
+      // 第一次播放完畢，從第 5 秒開始無限播放
+      video.addEventListener("ended", () => {
+        if (!hasLoopStarted) {
+          hasLoopStarted = true;
+        }
+        // 每次播放完跳回第 5 秒並再次播放（手動模擬 loop）
+        video.currentTime = 5;
+        video.play();
+      });
+    </script>
+  </body>
 </html>
