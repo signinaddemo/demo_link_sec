@@ -88,12 +88,12 @@
 
       let hasLoopStarted = false;
 
-      // 第一次播放完畢，從第 5 秒開始無限播放
+      // 第一次播放完畢，從第 1 秒開始無限播放
       video.addEventListener("ended", () => {
         if (!hasLoopStarted) {
           hasLoopStarted = true;
         }
-        // 每次播放完跳回第 5 秒並再次播放（手動模擬 loop）
+        // 每次播放完跳回第 1 秒並再次播放（手動模擬 loop）
         video.currentTime = 1;
         video.play();
       });
