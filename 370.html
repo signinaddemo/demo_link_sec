@@ -135,13 +135,17 @@
 <body>
   <img src="./images/background0.png" style="width: 100vw;" />
   <img src="./images/background1.png" style="width: 100vw;" />
-  <div id="ad-wrapper" onclick="openUrl('https://www.haagen-dazs.com.tw')">
+  <div id="ad-wrapper">
     <div id="img-wrapper">
       <div style="width: 100%; height: 100%; display: flex; justify-content: center; position: relative;">
-        <img src="./images/370/1.mp4" alt="" id="video" />
+        <video style="height: 100%;" loop muted playsinline id="video" onclick="openUrl('httpshttps://www.haagen-dazs.com.tw/')">
+        <source src="./images/370/1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <img onclick="muteButtonOnClick()" src="./images/mute.png" style="position: absolute; bottom: 16px; right: 10px; height: 24px; width: 24px;" id="muteButton" />
       </div>
     </div>
-    <div id="banner" class="swiper-wrapper">
+    <div id="banner" class="swiper-wrapper" onclick="openUrl('')">
       <div id="image2-wrapper">
         <img src="./images/370/down.png"/>
       </div>
@@ -168,22 +172,22 @@
                 alt=""
               />
           </div>
-          
-          <div class="swiper-slide">
+
+            <div class="swiper-slide">
               <img
                 src="./images/370/4.png"
                 alt=""
               />
           </div>
-          
-          <div class="swiper-slide">
+
+            <div class="swiper-slide">
               <img
                 src="./images/370/5.png"
                 alt=""
               />
           </div>
           
-          <div class="swiper-slide">
+            <div class="swiper-slide">
               <img
                 src="./images/370/6.png"
                 alt=""
@@ -230,6 +234,19 @@
 
 </script>
 <script>
+  function muteButtonOnClick() {
+    video.muted = !video.muted;
+    muteButton.src = `./images/${video.muted ? 'mute' : 'volume'}.png`;
+  }
+
+  function playVideo() {
+    video.play();
+  }
+
+  function pauseVideo() {
+    video.pause();
+  }
+
   function delay (s) {
     return new Promise(function (resolve, reject) {
       setTimeout(resolve, s);
@@ -246,6 +263,7 @@
 
     const openHeight = topWrapperHeight + (adImage2Wrapper.clientWidth / 0.7 / 640 * 600);
 
+    playVideo()
     delay()
       .then(() => {
         if (false) {
@@ -315,6 +333,15 @@
       if (topValue < screenH - videoHeight) {
         openAd()
         isOpened = true
+      }
+    } else {
+      if (
+        topValue < screenH - videoHeight / 2 &&
+        topValue > -(videoHeight / 2)
+      ) {
+        playVideo();
+      } else {
+        pauseVideo();
       }
     }
   });
