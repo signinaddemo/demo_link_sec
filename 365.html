@@ -26,11 +26,11 @@
       }
 
       #close {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        width: 36px;
-        height: 36px;
+        position: relative;
+        top: 0.5%;
+        left: 12px;
+        width: 30px;
+        height: 30px;
         z-index: 5;
       }
 
@@ -41,7 +41,12 @@
         position: relative;
       }
 
+      /* 移除了 #button 的 CSS 樣式 */
+
       video {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
       }
 
@@ -55,8 +60,9 @@
     <img src="./images/background1.png" style="width: 100vw" />
     <img src="./images/background2.png" style="width: 100vw" />
     <div class="cover" id="ad">
-      <img src="./images/close.png" id="close" onclick="closeOnClick()" />
       <div class="container">
+        <img src="./images/13/close.svg" id="close" onclick="closeOnClick()" />
+        
         <video muted playsinline autoplay id="video" onclick="openAd()">
           <source src="./images/365/1.mp4" type="video/mp4" />
           Your browser does not support the video tag.
@@ -67,11 +73,9 @@
   <script>
     const ad = document.getElementById("ad");
     const video = document.getElementById("video");
-    const firstCutDuration = 3;
+    const firstCutDuration = 0;
 
-    setTimeout(() => {
-      // mute button 已移除，這裡不再顯示任何按鈕
-    }, firstCutDuration * 1000);
+    // 移除了控制按鈕顯示的 setTimeout
 
     video.addEventListener("ended", () => {
       video.currentTime = firstCutDuration;
@@ -83,20 +87,9 @@
     };
 
     const openAd = () => {
-      window.open("https://www.facebook.com/RoseBeautyTW/?locale=zh_TW");
+      window.open("https://www.facebook.com/RoseBeautyTW");
     };
 
-      let hasLoopStarted = false;
-
-      // 第一次播放完畢，從第 1 秒開始無限播放
-      video.addEventListener("ended", () => {
-        if (!hasLoopStarted) {
-          hasLoopStarted = true;
-        }
-        // 每次播放完跳回第 1 秒並再次播放（手動模擬 loop）
-        video.currentTime = 1;
-        video.play();
-      });
-    </script>
-  </body>
+    // 移除了 muteButtonOnClick 函式
+  </script>
 </html>
