@@ -26,11 +26,11 @@
       }
 
       #close {
-        position: relative;
-        top: 0.5%;
-        left: 12px;
-        width: 30px;
-        height: 30px;
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 36px;
+        height: 36px;
         z-index: 5;
       }
 
@@ -41,12 +41,17 @@
         position: relative;
       }
 
-      /* 移除了 #button 的 CSS 樣式 */
+      #button {
+        position: absolute;
+        width: 8vw;
+        height: 8vw;
+        top: 45vw;
+        right: 12px;
+        z-index: 5;
+        display: none;
+      }
 
       video {
-        position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
       }
 
@@ -60,9 +65,13 @@
     <img src="./images/background1.png" style="width: 100vw" />
     <img src="./images/background2.png" style="width: 100vw" />
     <div class="cover" id="ad">
+      <img src="./images/close.png" id="close" onclick="closeOnClick()" />
       <div class="container">
-        <img src="./images/13/close.svg" id="close" onclick="closeOnClick()" />
-        
+        <img
+          onclick="muteButtonOnClick()"
+          src="./images/mute.png"
+          id="button"
+        />
         <video muted playsinline autoplay id="video" onclick="openAd()">
           <source src="./images/383/1.mp4" type="video/mp4" />
           Your browser does not support the video tag.
@@ -73,9 +82,12 @@
   <script>
     const ad = document.getElementById("ad");
     const video = document.getElementById("video");
-    const firstCutDuration = 0;
+    const button = document.getElementById("button");
+    const firstCutDuration = 3.2;
 
-    // 移除了控制按鈕顯示的 setTimeout
+    setTimeout(() => {
+      button.style.display = "block";
+    }, firstCutDuration * 1000);
 
     video.addEventListener("ended", () => {
       video.currentTime = firstCutDuration;
@@ -90,6 +102,9 @@
       window.open("https://www.pecos.com.tw/brands-%E7%B5%B1%E4%B8%80%E9%BA%B5%E5%8C%85.html");
     };
 
-    // 移除了 muteButtonOnClick 函式
+    const muteButtonOnClick = () => {
+      video.muted = !video.muted;
+      button.src = `./images/${video.muted ? "mute" : "volume"}.png`;
+    };
   </script>
 </html>
