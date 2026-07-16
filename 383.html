@@ -69,7 +69,7 @@
       <div class="container">
         <img
           onclick="muteButtonOnClick()"
-          src="./images/mute.png"
+          src="./images/volumeair.png"
           id="button"
         />
         <video muted playsinline autoplay id="video" onclick="openAd()">
@@ -104,7 +104,7 @@
 
     const muteButtonOnClick = () => {
       video.muted = !video.muted;
-      button.src = `./images/${video.muted ? "mute" : "volume"}.png`;
+      button.src = `./images/${video.muted ? "mute" : "volumeair"}.png`;
     };
   </script>
 </html>
