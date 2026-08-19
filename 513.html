@@ -1,101 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>content-gallery h5 template</title>
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+  <title>Content Gallery H5 Template</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/swiper/swiper-bundle.min.css"
+  >
+
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
-   <style>
-      * {
-        margin: 0;
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      background-color: transparent;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    /* 上下方背景圖片 */
+    .background-img {
+      display: block;
+      width: 100vw;
+      height: auto;
+    }
+
+    /* 1080 × 1920 = 9:16 */
+    .banner {
+      position: relative;
+      width: 100vw;
+      aspect-ratio: 9 / 16;
+      overflow: hidden;
+      background-color: #000;
+    }
+
+    .swiper-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .swiper-wrapper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    /* 支援1080 × 1920影片，不會拉伸變形 */
+    .swiper-slide-media {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border: 0;
+    }
+
+    .swiper-slide-shadow {
+      opacity: 1 !important;
+      background: transparent !important;
+      box-shadow: 15px 0 5px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    /* 手指滑動提示 */
+    #finger {
+      position: absolute;
+      z-index: 10;
+      left: 55%;
+      bottom: 8%;
+      width: 15%;
+      height: auto;
+      pointer-events: none;
+      opacity: 1;
+      transform: translateX(-50%);
+      animation: fingerMove 1.5s ease-in-out infinite;
+      transition: opacity 0.3s ease;
+    }
+
+    @keyframes fingerMove {
+      0% {
+        left: 55%;
       }
 
-      body {
-        background-color: transparent;
+      50% {
+        left: 45%;
       }
 
-      .banner {
-        width: 100vw;
-        height: 200vw;
-        overflow: hidden;
+      100% {
+        left: 55%;
       }
-
-      .swiper-container {
-        width: 100%;
-        height: 200vw;
-      }
-
-      .swiper-slide {
-        overflow: visible !important;
-      }
-
-      .swiper-slide-shadow {
-        opacity: 1 !important;
-        background: transparent !important;
-        box-shadow: 15px 0px 5px 0px rgba(0, 0, 0, 0.4) !important;
-      }
-
-      .swiper-slide-img {
-        width: 100%;
-        height: 200vw;
-        padding: 5px;
-        box-sizing: border-box;
-      }
-
-      @keyframes move {
-        0%   {left: 55%;}
-        50%  {left: 45%;}
-        100% {left: 55%;}
-      }
-    </style>
+    }
+  </style>
 </head>
+
 <body>
-  <img src="./images/background0.png" style="width: 100vw;" />
-  <img src="./images/background1.png" style="width: 100vw;" />
+  <!-- 上方背景 -->
+  <img
+    class="background-img"
+    src="./images/background0.png"
+    alt=""
+  >
+
+  <img
+    class="background-img"
+    src="./images/background1.png"
+    alt=""
+  >
+
+  <!-- 1080 × 1920影片區塊 -->
   <div class="banner" id="banner">
-    <!-- Swiper -->
     <div class="swiper-container">
       <div class="swiper-wrapper">
-        <div class="swiper-slide"><img class="swiper-slide-img" src="./images/513/1.mp4" alt="" onclick="openUrl()"></div>
+
+        <div class="swiper-slide" onclick="openUrl()">
+          <video
+            class="swiper-slide-media"
+            src="./images/513/1.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            webkit-playsinline
+            preload="auto"
+          ></video>
+        </div>
+
       </div>
-      <img src="./images/finger.png" alt="" id="finger" />
+
+      <!-- 手指滑動提示 -->
+      <img
+        src="./images/finger.png"
+        alt="滑動提示"
+        id="finger"
+      >
     </div>
   </div>
-  <img src="./images/background2.png" style="width: 100vw;" />
+
+  <!-- 下方背景 -->
+  <img
+    class="background-img"
+    src="./images/background2.png"
+    alt=""
+  >
+
+  <script>
+    const finger = document.getElementById("finger");
+
+    const swiper = new Swiper(".swiper-container", {
+      effect: "creative",
+      grabCursor: false,
+      loop: true,
+      spaceBetween: 10,
+      speed: 500,
+
+      creativeEffect: {
+        limitProgress: 3,
+        shadowPerProgress: true,
+
+        prev: {
+          translate: ["-120%", 0, 0],
+          rotate: [0, 0, 10],
+          shadow: true
+        },
+
+        next: {
+          translate: ["0%", 0, -500]
+        }
+      }
+    });
+
+    swiper.on("slideChange", function () {
+      finger.style.opacity = "0";
+    });
+
+    /*
+      如果之後增加多個swiper-slide，
+      每4秒會自動切換到下一個素材。
+    */
+    if (swiper.slides.length > 1) {
+      setInterval(function () {
+        swiper.slideNext();
+        finger.style.opacity = "0";
+      }, 4000);
+    }
+
+    function openUrl() {
+      window.open(
+        "https://www.lg.com/tw/lifesgood/?utm_source=google&utm_medium=cpm&utm_campaign=TW_ALL_Branding_TW_26_Q3_PHD_BrandCampaign_NA_awareness_EATT-MKT-202606300022_Signinad_PRO_OTH_CPM_RCH_PRO&utm_content=20260820_FamilyInterview_NA_RCH",
+        "_blank"
+      );
+    }
+  </script>
 </body>
-<script>
-  const finger = document.getElementById("finger");
-var swiper = new Swiper('.swiper-container', {
-  effect: "creative",
-  grabCursor: off,
-  loop: true,
-  spaceBetween: 10,
-  speed: 100,
-  creativeEffect: {
-    limitProgress: 3,
-    shadowPerProgress: true,
-    prev: {
-      translate: ["-120%", 0, 0],
-      rotate: [0, 0, 10],
-      shadow: true
-    },
-    next: {
-      translate: ["0%", 0, -500]
-    },
-  },
-});
-
-swiper.on('slideChange', function () {
-  finger.style.opacity = "0";
-});
-
-setInterval(() => {
-  swiper.slideNext();
-  finger.style.opacity = "0";
-}, 4000);
-
-function openUrl(){
-  window.open('https://www.lg.com/tw/lifesgood/?utm_source=google&utm_medium=cpm&utm_campaign=TW_ALL_Branding_TW_26_Q3_PHD_BrandCampaign_NA_awareness_EATT-MKT-202606300022_Signinad_PRO_OTH_CPM_RCH_PRO&utm_content=20260820_FamilyInterview_NA_RCH');}
-</script>
 </html>
