@@ -1,9 +1,11 @@
-<html lang="en">
+<html lang="zh-TW">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>content-gallery h5 template</title>
+
     <style>
       * {
         margin: 0;
@@ -18,34 +20,58 @@
       }
     </style>
   </head>
+
   <body>
     <img src="./images/background0.png" style="width: 100vw" />
     <img src="./images/background1.png" style="width: 100vw" />
+
     <div id="ad" onclick="openAd()">
-      <video muted playsinline style="width: 100%" id="video">
+      <video
+        muted
+        playsinline
+        preload="auto"
+        style="width: 100%"
+        id="video"
+      >
         <source src="./images/578/1.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
+
     <img src="./images/background2.png" style="width: 100vw" />
+
+    <script>
+      const banner = document.getElementById("ad");
+      const video = document.getElementById("video");
+
+      // 監測廣告是否進入畫面
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            // 廣告至少有 50% 出現在畫面時播放
+            if (entry.isIntersecting) {
+              video.play().catch((error) => {
+                console.log("影片播放失敗：", error);
+              });
+
+              // 成功觸發後不再監測，影片只播放一次
+              observer.unobserve(banner);
+            }
+          });
+        },
+        {
+          threshold: 0.5,
+        }
+      );
+
+      observer.observe(banner);
+
+      // 點擊影片後開啟廣告網址
+      const openAd = () => {
+        window.open(
+          "https://www.pecos.com.tw/brands-%E5%8D%9A%E5%AE%A2.html"
+        );
+      };
+    </script>
   </body>
-  <script>
-    const banner = document.getElementById("ad");
-    const video = document.getElementById("video");
-
-    window.addEventListener("scroll", scrollListener);
-
-    function scrollListener(event) {
-      if (
-        banner.getClientRects()[0].y <
-        window.screen.height - banner.clientHeight
-      ) {
-        window.removeEventListener("scroll", scrollListener);
-        video.play();
-      }
-    }
-    const openAd = () => {
-      window.open("https://www.pecos.com.tw/brands-%E5%8D%9A%E5%AE%A2.html");
-    };
-  </script>
 </html>
