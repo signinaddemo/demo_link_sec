@@ -1,213 +1,211 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>content-gallery h5 template</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/swiper/swiper-bundle.min.css"
-    />
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
-    <style>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>content-gallery h5 template</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/plugins/PixiPlugin.min.js"></script>
+   <style>
       * {
         margin: 0;
       }
 
-      body {
-        background-color: transparent;
-      }
-
-      .banner {
-        width: 100vw;
-        height: 150vw;
-        overflow: hidden;
+      #ad-wrapper {
+        width: 100%;
+        height: calc(100vw * 0.5625);
         position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row-reverse;
       }
 
-      #startVideo {
+      #video-wrapper {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        width:30%;
+        cursor:pointer;
+      }
+
+      #video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      #img-wrapper {
+        cursor: pointer;
+        width: 30%;
+      }
+
+      #img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+      }
+
+      #image2-wrapper {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        transition: 0.5s;
-        z-index: 100;
+        width:100%;
+        height:100%
       }
 
-      .swiper-container {
-        width: 100%;
-        height: 93.75vw;
+      #image2-wrapper img {
+        object-fit:cover;
+        height:100%;
+        width:100%;
       }
 
-      .swiper-slide {
-        overflow: visible !important;
-      }
-
-      .swiper-slide-shadow {
-        opacity: 1 !important;
-        background: transparent !important;
-        box-shadow: 15px 0px 5px 0px rgba(0, 0, 0, 0.4) !important;
-      }
-
-      .swiper-slide-img {
-        width: 100%;
-        height: 93.75vw;
-        padding: 5px;
-        box-sizing: border-box;
-      }
-
-      #swiperContainer {
-        display: none;
-      }
-
-      #videoContainer {
-        width: 100%;
-        height: 56.25vw;
-        position: relative;
-        display: none;
-      }
-
-      @keyframes move {
-        0% {
-          left: 55%;
-        }
-        50% {
-          left: 45%;
-        }
-        100% {
-          left: 55%;
-        }
-      }
-
-      #finger {
+      #banner {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1;
-        transition: 0.5s;
-        width: 64px;
-        height: 64px;
-        animation: move 1s linear;
-        animation-iteration-count: infinite;
+        top: 0;
+        left: 0;
+        width: 70%;
+        height: 100%;
+        overflow: hidden;
       }
     </style>
-  </head>
-  <body>
-    <img src="./images/background0.png" style="width: 100vw" />
-    <img src="./images/background1.png" style="width: 100vw" />
-    <div class="banner" id="banner">
-      <video muted playsinline style="width: 100%" id="startVideo">
-        <source src="./images/619/V.mp4" type="video/mp4" />
+</head>
+<body>
+  <img src="./images/background0.png" style="width: 100vw;" />
+  <img src="./images/background1.png" style="width: 100vw;" />
+  <div id="ad-wrapper">
+    <div id="img-wrapper">
+      <div style="width: 100%; height: 100%; display: flex; justify-content: center; position: relative;">
+        <video style="height: 100%;" loop muted playsinline id="video" onclick="openUrl()">
+        <source src="./images/619/V.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
-      <!-- Swiper -->
-      <div class="swiper-container" id="swiperContainer">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <img
-              class="swiper-slide-img"
-              src="./images/619/b.jpg"
-              alt=""
-              onclick="openUrl('https://www.uniopen.com/news/content/6ab21e3cf8cb700200396f09?utm_source=signin&utm_medium=promo&utm_campaign=lionking&utm_content=adnetwork')"
-      </div>
-      <div id="videoContainer">
-        <video
-          muted
-          playsinline
-          loop
-          style="width: 100%"
-          id="video"
-          onclick="openUrl('https://www.uniopen.com/news/content/6ab21e3cf8cb700200396f09?utm_source=signin&utm_medium=promo&utm_campaign=lionking&utm_content=adnetwork')"
-        >
-          <source src="./images/619/2.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <img
-          onclick="muteButtonOnClick()"
-          src="./images/mute.png"
-          style="
-            position: absolute;
-            bottom: 16px;
-            right: 10px;
-            height: 24px;
-            width: 24px;
-          "
-          id="muteButton"
-        />
+      <img onclick="muteButtonOnClick()" src="./images/mute.png" style="position: absolute; bottom: 16px; right: 10px; height: 24px; width: 24px;" id="muteButton" />
       </div>
     </div>
-    <img src="./images/background2.png" style="width: 100vw" />
-  </body>
-  <script>
-    const startVideo = document.getElementById("startVideo");
-    const video = document.getElementById("video");
-    const muteButton = document.getElementById("muteButton");
-    const finger = document.getElementById("finger");
-    const videoContainer = document.getElementById("videoContainer");
-    const swiperContainer = document.getElementById("swiperContainer");
-    var swiper = new Swiper(".swiper-container", {
-      effect: "creative",
-      grabCursor: true,
-      loop: true,
-      spaceBetween: 10,
-      speed: 800,
-      creativeEffect: {
-        limitProgress: 3,
-        shadowPerProgress: true,
-        prev: {
-          translate: ["-120%", 0, 0],
-          rotate: [0, 0, 10],
-          shadow: true,
-        },
-        next: {
-          translate: ["0%", 0, -500],
-        },
-      },
+    <div id="banner" class="swiper-wrapper" onclick="openUrl()">
+      <div id="image2-wrapper">
+        <img src="./images/619/b.jpg"/>
+      </div>
+    </div>
+  </div>
+  <img src="./images/background2.png" style="width: 100vw;" />
+</body>
+<script>
+  const video = document.getElementById('video');
+  const adWrapper = document.getElementById('ad-wrapper');
+  const adVideoWrapper = document.getElementById('video-wrapper');
+  const adVideo = document.getElementById('video');
+  const adImageWrapper = document.getElementById('img-wrapper');
+  const adBanner = document.getElementById('banner');
+  const adImage2Wrapper = document.getElementById('image2-wrapper');
+
+</script>
+<script>
+  function muteButtonOnClick() {
+    video.muted = !video.muted;
+    muteButton.src = `./images/${video.muted ? 'mute' : 'volume'}.png`;
+  }
+
+  function playVideo() {
+    video.play();
+  }
+
+  function pauseVideo() {
+    video.pause();
+  }
+
+  function delay (s) {
+    return new Promise(function (resolve, reject) {
+      setTimeout(resolve, s);
     });
+  };
 
-    const scrollListener = () => {
-      const videoHeight = startVideo.getBoundingClientRect().height;
-      const topValue = startVideo.getBoundingClientRect().y;
-      const screenH = window.screen.height;
+  function openUrl() {
+    window.open('https://www.uniopen.com/news/content/6ab21e3cf8cb700200396f09?utm_source=signin&utm_medium=promo&utm_campaign=lionking&utm_content=adnetwork');
+  }
 
+  function openAd() {
+    const slot = adVideoWrapper ? adVideoWrapper : adImageWrapper;
+    const topWrapperHeight = adVideoWrapper ? adVideoWrapper.clientHeight : adImageWrapper.clientHeight;
+
+    const openHeight = topWrapperHeight + (adImage2Wrapper.clientWidth / 0.7 / 640 * 600);
+
+    playVideo()
+    delay()
+      .then(() => {
+        if (false) {
+          adImage2Wrapper.style.opacity = 0;
+          TweenMax.to(adImage2Wrapper, 0, { opacity: 1 });
+            return delay(0);
+        }
+      })
+      .then(() => {
+        if (false) {
+          TweenMax.to(adImage2Wrapper, 0, { opacity: 0 });
+        }
+      });
+
+
+    slot.style.transition = 'width 0.8s';
+    adBanner.style.transition = 'all 0.8s';
+
+    slot.style.width = '100%';
+    adWrapper.style.paddingBottom = (adImage2Wrapper.clientWidth / 0.7 / 640 * 600) + 'px';
+    adBanner.style.top = slot.clientHeight + 'px';
+    adBanner.style.width = '100%';
+    adBanner.style.height = (adImage2Wrapper.clientWidth / 0.7 / 640 * 600) + 'px';
+  }
+</script>
+<script>
+  let videoEnded = false;
+  let isOpened = false;
+  if (adVideoWrapper) {
+    const videoPlayerWrapper = document.querySelector(
+      '.player-wrapper'
+    );
+    videoPlayerWrapper.style.float = 'none';
+
+    adVideo.onended = () => {
+      videoEnded = true;
+
+      adVideoWrapper.style.width = '30%';
+      adBanner.style.height = adVideo.style.height;
+      adBanner.style.width = '70%';
+      adWrapper.style.paddingBottom = '0px';
+      adBanner.style.top = '0px';
+      adBanner.style.right = '0%';
+
+      setTimeout(() => {
+        parent.postMessage({
+          type:"resize",
+          size: adWrapper.clientWidth + 'x' + adVideo.clientHeight,
+        }, "*");
+
+      }, 350);
+    };
+  }
+
+  window.addEventListener('scroll', (event) => {
+    const videoHeight = video.getBoundingClientRect().height
+    const topValue = video.getBoundingClientRect().y
+    const screenH = window.screen.height;
+
+    if (!isOpened) {
+      if (topValue < screenH - videoHeight) {
+        openAd()
+        isOpened = true
+      }
+    } else {
       if (
         topValue < screenH - videoHeight / 2 &&
         topValue > -(videoHeight / 2)
       ) {
-        startVideo.play();
-        window.removeEventListener("scroll", scrollListener);
+        playVideo();
+      } else {
+        pauseVideo();
       }
-    };
-
-    window.addEventListener("scroll", scrollListener);
-
-    startVideo.addEventListener("ended", (event) => {
-      videoContainer.style.display = "block";
-      swiperContainer.style.display = "block";
-      startVideo.style.opacity = 0;
-      setTimeout(() => {
-        startVideo.remove();
-        video.play();
-        setInterval(() => {
-          swiper.slideNext();
-          finger.style.opacity = "0";
-          swiper.on("slideChange", function () {
-            finger.style.opacity = "0";
-          });
-        }, 5000);
-      }, 500);
-    });
-
-    function muteButtonOnClick() {
-      video.muted = !video.muted;
-      muteButton.src = `./images/${video.muted ? "mute" : "volume"}.png`;
     }
-
-    function openUrl(url) {
-      window.open(url);
-    }
-  </script>
+  });
+</script>
 </html>
