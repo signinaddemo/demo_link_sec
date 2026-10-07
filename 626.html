@@ -85,7 +85,7 @@
 var swiper = new Swiper('.swiper-container', {
   effect: "creative",
   grabCursor: true,
-  loop: false,
+  loop: true,
   spaceBetween: 10,
   speed: 800,
   creativeEffect: {
@@ -109,7 +109,7 @@ swiper.on('slideChange', function () {
 setInterval(() => {
   swiper.slideNext();
   finger.style.opacity = "0";
-}, 6000);
+}, 5000);
 
 function openUrl(){
   window.open('https://www.kfcclub.com.tw');
