@@ -18,16 +18,16 @@
       }
 
       .banner {
-        width: 100vw;
-        height: 83.333vw;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
       }
 
       .swiper-container {
         width: 100%;
-        height: 56.25vw;
+        padding-top: 0% !important;
+        padding-bottom: 0% !important;
       }
 
       .swiper-slide {
@@ -39,27 +39,45 @@
       .swiper-slide img {
         width: 100%
       }
+
+      .swiper-container-3d .swiper-slide-shadow-left {
+        border-radius: 10%;
+      }
+
+      .swiper-container-3d .swiper-slide-shadow-right {
+        border-radius: 10%;
+      }
+      #close {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 24px;
+        height: 24px;
+      }
     </style>
 </head>
 <body>
   <img src="./images/background0.png" style="width: 100vw;" />
   <img src="./images/background1.png" style="width: 100vw;" />
-  <div class="banner" id="banner">
-    <!-- Swiper -->
-    <div class="swiper-container">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="./images/647/1.jpg" alt="" onclick="openUrl()"></div>
-        <div class="swiper-slide"><img src="./images/647/2.jpg" alt="" onclick="openUrl()"></div>
-        <div class="swiper-slide"><img src="./images/647/3.jpg" alt="" onclick="openUrl()"></div>
-        <div class="swiper-slide"><img src="./images/647/1.jpg" alt="" onclick="openUrl()"></div>
-        <div class="swiper-slide"><img src="./images/647/2.jpg" alt="" onclick="openUrl()"></div>
-        <div class="swiper-slide"><img src="./images/647/3.jpg" alt="" onclick="openUrl()"></div>
+  <img src="./images/background2.png" style="width: 100vw;" />
+  <div class="wrapper">
+    <div class="banner" id="banner">
+      <!-- Swiper -->
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="./images/404/1.jpg" alt="" onclick="openUrl()"></div>
+          <div class="swiper-slide"><img src="./images/404/2.jpg" alt="" onclick="openUrl()"></div>
+          <div class="swiper-slide"><img src="./images/404/3.jpg" alt="" onclick="openUrl()"></div>
+          <div class="swiper-slide"><img src="./images/404/1.jpg" alt="" onclick="openUrl()"></div>
+          <div class="swiper-slide"><img src="./images/404/2.jpg" alt="" onclick="openUrl()"></div>
+          <div class="swiper-slide"><img src="./images/404/3.jpg" alt="" onclick="openUrl()"></div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
       </div>
-      <!-- Add Pagination -->
-      <div class="swiper-pagination"></div>
+      <img src="./images/close.png" alt="" id="close" onclick="closeAd()" />
     </div>
   </div>
-  <img src="./images/background2.png" style="width: 100vw;" />
 </body>
 <script>
 let isSwiped = false;
@@ -90,12 +108,34 @@ const animationDelay = function(sec){
   });
 };
 
+swiper.on('touchMove', function () {
+  if (isSwiped) return;
+  isSwiped = true;
+});
+
+window.addEventListener("message", (e) => swiperAnimation(e));
+
 setInterval(() => {
   swiper.slideNext();
 }, 3500);
 
+function swiperAnimation(e) {
+  const scrollTop = e.data.scrollTop;
+  const isScrollDown = (scrollTop > lastScrollTop) ? true : false;
+  lastScrollTop = scrollTop;
+  if (isWaiting) return;
+  isWaiting = true;
+  if (isScrollDown) swiper.slideNext();
+  else swiper.slidePrev();
+  setTimeout("isWaiting = false", 2000);
+}
+
 function openUrl(){
   window.open('https://ad.doubleclick.net/ddm/trackclk/N997352.4719235SIGNINAD/B37080699.459142266;dc_trk_aid=653105558;dc_trk_cid=266007970;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;gdpr=${GDPR};gdpr_consent=${GDPR_CONSENT_755};ltd=;dc_tdv=1');
+}
+
+function closeAd(){
+  document.getElementById("banner").remove()
 }
 </script>
 </html>
