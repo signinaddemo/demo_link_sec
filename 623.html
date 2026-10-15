@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
@@ -24,15 +25,15 @@
       background-color: transparent;
     }
 
-    /* 整體廣告區塊 */
+    /* 整體廣告：640 × 960 */
     .banner {
       width: 100%;
       aspect-ratio: 640 / 960;
-      overflow: hidden;
       position: relative;
+      overflow: hidden;
     }
 
-    /* 開場影片 */
+    /* Start 開場影片 */
     #startVideo {
       position: absolute;
       top: 0;
@@ -40,16 +41,17 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      z-index: 100;
       background: #000;
+      z-index: 100;
     }
 
-    /* BN：640 × 600 */
-    .swiper-container {
+    /* BN 輪播區：640 × 600 */
+    #swiperContainer {
       width: 100%;
       height: 62.5%;
       position: relative;
       overflow: hidden;
+      display: none;
     }
 
     .swiper-slide {
@@ -60,12 +62,15 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: fill;
       padding: 0;
+      object-fit: fill;
     }
 
-    #swiperContainer {
-      display: none;
+    .swiper-slide-shadow {
+      opacity: 1 !important;
+      background: transparent !important;
+      box-shadow:
+        15px 0px 5px 0px rgba(0,0,0,0.4) !important;
     }
 
     /* 下方影片：640 × 360 */
@@ -83,31 +88,52 @@
       object-fit: cover;
     }
 
-    /* 手指左右滑動動畫 */
+    /* 手指左右移動動畫 */
     @keyframes move {
-      0% { left: 55%; }
-      50% { left: 45%; }
-      100% { left: 55%; }
+      0% {
+        left: 55%;
+      }
+      50% {
+        left: 45%;
+      }
+      100% {
+        left: 55%;
+      }
     }
 
+    /* 手指圖示：預設隱藏 */
     #finger {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      z-index: 999;
-      opacity: 0;
-      transition: opacity 0.3s;
+      z-index: 9999;
+
+      display: none;
+
       width: 64px;
       height: 64px;
       pointer-events: none;
+
       animation: move 1s linear infinite;
+    }
+
+    /* 聲音開關 */
+    #muteButton {
+      position: absolute;
+      bottom: 16px;
+      right: 10px;
+      width: 24px;
+      height: 24px;
+      z-index: 10;
+      cursor: pointer;
     }
   </style>
 </head>
 
 <body>
 
+  <!-- 上方背景 -->
   <img src="./images/background0.png"
        style="display:block; width:100%;">
 
@@ -120,164 +146,228 @@
     <video muted playsinline id="startVideo">
       <source src="./images/623/start.mp4"
               type="video/mp4">
+      Your browser does not support the video tag.
     </video>
 
-    <!-- BN 輪播 -->
+    <!-- BN 輪播區 -->
     <div class="swiper-container" id="swiperContainer">
+
       <div class="swiper-wrapper">
 
+        <!-- 第一張 BN -->
         <div class="swiper-slide">
-          <img class="swiper-slide-img"
-               src="./images/623/1.jpg"
-               onclick="openUrl('https://reurl.cc/jV2yML')">
+          <img
+            class="swiper-slide-img"
+            src="./images/623/1.jpg"
+            alt=""
+            onclick="openUrl('https://reurl.cc/jV2yML')">
         </div>
 
+        <!-- 第二張 BN -->
         <div class="swiper-slide">
-          <img class="swiper-slide-img"
-               src="./images/623/2.jpg"
-               onclick="openUrl('https://reurl.cc/jV2yML')">
+          <img
+            class="swiper-slide-img"
+            src="./images/623/2.jpg"
+            alt=""
+            onclick="openUrl('https://reurl.cc/jV2yML')">
         </div>
 
+        <!-- 第三張 BN -->
         <div class="swiper-slide">
-          <img class="swiper-slide-img"
-               src="./images/623/4.jpg"
-               onclick="openUrl('https://reurl.cc/jV2yML')">
+          <img
+            class="swiper-slide-img"
+            src="./images/623/4.jpg"
+            alt=""
+            onclick="openUrl('https://reurl.cc/jV2yML')">
         </div>
 
+        <!-- 第四張 BN -->
         <div class="swiper-slide">
-          <img class="swiper-slide-img"
-               src="./images/623/3.jpg"
-               onclick="openUrl('https://reurl.cc/jV2yML')">
+          <img
+            class="swiper-slide-img"
+            src="./images/623/3.jpg"
+            alt=""
+            onclick="openUrl('https://reurl.cc/jV2yML')">
         </div>
 
       </div>
 
-      <!-- 只保留一個手指圖示 -->
-      <img src="./images/finger.png"
-           alt=""
-           id="finger">
+      <!-- 手指圖示：只保留一個 -->
+      <img
+        src="./images/finger.png"
+        alt=""
+        id="finger">
 
     </div>
 
     <!-- 下方影片 -->
     <div id="videoContainer">
 
-      <video muted playsinline loop id="video"
-             onclick="openUrl('https://reurl.cc/jV2yML')">
+      <video
+        muted
+        playsinline
+        loop
+        id="video"
+        onclick="openUrl('https://reurl.cc/jV2yML')">
+
         <source src="./images/623/v.mp4"
                 type="video/mp4">
+
+        Your browser does not support the video tag.
       </video>
 
-      <!-- 聲音鍵 -->
-      <img onclick="muteButtonOnClick()"
-           src="./images/mute.png"
-           style="
-             position:absolute;
-             bottom:16px;
-             right:10px;
-             width:24px;
-             height:24px;
-             z-index:10;
-           "
-           id="muteButton">
+      <!-- 聲音開關 -->
+      <img
+        onclick="muteButtonOnClick()"
+        src="./images/mute.png"
+        alt="聲音開關"
+        id="muteButton">
 
     </div>
 
   </div>
 
+  <!-- 下方背景 -->
   <img src="./images/background2.png"
        style="display:block; width:100%;">
 
   <script>
-    const startVideo = document.getElementById("startVideo");
-    const video = document.getElementById("video");
-    const muteButton = document.getElementById("muteButton");
-    const finger = document.getElementById("finger");
-    const videoContainer = document.getElementById("videoContainer");
-    const swiperContainer = document.getElementById("swiperContainer");
+    const startVideo =
+      document.getElementById("startVideo");
 
+    const video =
+      document.getElementById("video");
+
+    const muteButton =
+      document.getElementById("muteButton");
+
+    const finger =
+      document.getElementById("finger");
+
+    const videoContainer =
+      document.getElementById("videoContainer");
+
+    const swiperContainer =
+      document.getElementById("swiperContainer");
+
+    let autoSlideTimer = null;
+
+    /* 初始化 Swiper */
     const swiper = new Swiper("#swiperContainer", {
       effect: "creative",
       grabCursor: true,
+
+      // 持續循環
       loop: true,
+
       spaceBetween: 10,
 
-      // 切換動畫 0.5 秒
+      // 換 Cut 動畫 0.5 秒
       speed: 500,
 
       creativeEffect: {
         limitProgress: 3,
         shadowPerProgress: true,
+
         prev: {
           translate: ["-120%", 0, 0],
           rotate: [0, 0, 10],
           shadow: true
         },
+
         next: {
           translate: ["0%", 0, -500]
         }
       }
     });
 
-    // Start 播放時不顯示手指
-    finger.style.opacity = "0";
+    /* Start 播放時，手指隱藏 */
+    finger.style.display = "none";
 
-    // 捲動至廣告時播放 Start
+    /* 捲動到廣告區域時播放 Start */
+    let startHasPlayed = false;
+
     const scrollListener = () => {
-      const rect = startVideo.getBoundingClientRect();
+
+      if (startHasPlayed) return;
+
+      const rect =
+        startVideo.getBoundingClientRect();
+
       const screenH = window.innerHeight;
 
       if (
         rect.top < screenH - rect.height / 2 &&
         rect.top > -(rect.height / 2)
       ) {
-        startVideo.play();
-        window.removeEventListener("scroll", scrollListener);
+
+        startHasPlayed = true;
+
+        startVideo.play().catch(() => {
+          startHasPlayed = false;
+        });
+
+        window.removeEventListener(
+          "scroll",
+          scrollListener
+        );
       }
     };
 
-    window.addEventListener("scroll", scrollListener);
+    window.addEventListener(
+      "scroll",
+      scrollListener
+    );
+
     scrollListener();
 
-    // Start 結束後立即顯示第一張 BN
+    /* Start 播放結束 */
     startVideo.addEventListener("ended", () => {
 
+      // 1. 顯示 BN 與下方影片
       swiperContainer.style.display = "block";
       videoContainer.style.display = "block";
 
+      // 2. 更新 Swiper 並回到第一張
       swiper.update();
       swiper.slideToLoop(0, 0);
 
+      // 3. 移除 Start，立即顯示 BN
       startVideo.remove();
 
-      // 第一張 BN 顯示手指
-      finger.style.opacity = "1";
+      // 4. 第一張 BN 顯示手指
+      finger.style.display = "block";
 
-      // 下方影片播放
-      video.play();
+      // 5. 下方影片開始播放
+      video.play().catch(() => {});
 
-      // 每 2 秒換下一張 BN
-      setInterval(() => {
+      // 6. 每 2 秒切換下一張 BN
+      autoSlideTimer = setInterval(() => {
+
+        // 第一次換 Cut 時隱藏手指
+        finger.style.display = "none";
+
+        // 切換下一張 BN
         swiper.slideNext();
+
       }, 2000);
+
     });
 
-    // 切換 BN 後隱藏手指
-    swiper.on("slideChange", () => {
-      finger.style.opacity = "0";
-    });
-
-    // 聲音開關
+    /* 聲音開關 */
     function muteButtonOnClick() {
+
       video.muted = !video.muted;
+
       muteButton.src =
         `./images/${video.muted ? "mute" : "volume"}.png`;
     }
 
-    // 點擊導連
+    /* 點擊導連 */
     function openUrl(url) {
       window.open(url);
     }
+
   </script>
 
 </body>
