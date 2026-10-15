@@ -81,17 +81,19 @@
         }
       }
 
-      #finger {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1;
-        transition: 0.5s;
-        width: 64px;
-        height: 64px;
-        animation: move 1s linear;
-        animation-iteration-count: infinite;
+     #finger {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  opacity: 1;
+  transition: opacity 0.5s;
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+  animation: move 1s linear infinite;
+}
       }
     </style>
   </head>
@@ -131,13 +133,19 @@
             />
           </div>
            <div class="swiper-slide">
-            <img
-              class="swiper-slide-img"
-              src="./images/623/3.jpg"
-              alt=""
-              onclick="openUrl('https://reurl.cc/jV2yML')"
-            />
-        </div>
+  <img
+    class="swiper-slide-img"
+    src="./images/623/3.jpg"
+    alt=""
+    onclick="openUrl('https://reurl.cc/jV2yML')"
+  />
+</div>
+
+</div> <!-- 關閉 swiper-wrapper -->
+
+<img src="./images/finger.png" alt="" id="finger" />
+
+</div> <!-- 關閉 swiper-container -->
         <img src="./images/finger.png" alt="" id="finger" />
       </div>
       <div id="videoContainer">
@@ -211,22 +219,35 @@
 
     window.addEventListener("scroll", scrollListener);
 
-    startVideo.addEventListener("ended", (event) => {
-      videoContainer.style.display = "block";
-      swiperContainer.style.display = "block";
-      startVideo.style.opacity = 0;
-      setTimeout(() => {
-        startVideo.remove();
-        video.play();
-        setInterval(() => {
-          swiper.slideNext();
-          finger.style.opacity = "0";
-          swiper.on("slideChange", function () {
-            finger.style.opacity = "0";
-          });
-        }, 5000);
-      }, 500);
-    });
+    startVideo.addEventListener("ended", () => {
+
+  // Start 播完，立即顯示第一張 BN
+  swiperContainer.style.display = "block";
+  videoContainer.style.display = "block";
+
+  // 移除開場影片，不等待
+  startVideo.remove();
+
+  // 更新 Swiper，確保第一張 BN 正常顯示
+  swiper.update();
+  swiper.slideToLoop(0, 0);
+
+  // 第一張 BN 顯示手指圖示
+  finger.style.opacity = "1";
+
+  // 下方影片開始播放
+  video.play();
+
+  // 每 2 秒切換下一張 BN
+  setInterval(() => {
+    swiper.slideNext();
+  }, 2000);
+});
+
+// 第一次切換 BN 時隱藏手指圖示
+swiper.on("slideChange", function () {
+  finger.style.opacity = "0";
+});
 
     function muteButtonOnClick() {
       video.muted = !video.muted;
