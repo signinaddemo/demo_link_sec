@@ -242,42 +242,40 @@
       }
     });
 
-    /* 捲動到廣告區域時播放 Start */
-    let startHasPlayed = false;
+/* 廣告進入畫面後才播放 Start */
 
-    const scrollListener = () => {
+let startHasPlayed = false;
 
-      if (startHasPlayed) return;
+// 確保開場影片初始為暫停
+startVideo.pause();
+startVideo.currentTime = 0;
 
-      const rect =
-        startVideo.getBoundingClientRect();
+// 偵測廣告是否進入可視範圍
+const observer = new IntersectionObserver((entries) => {
 
-      const screenH = window.innerHeight;
+  const entry = entries[0];
 
-      if (
-        rect.top < screenH - rect.height / 2 &&
-        rect.top > -(rect.height / 2)
-      ) {
+  // 廣告至少 50% 進入畫面才開始播放
+  if (entry.isIntersecting && !startHasPlayed) {
 
-        startHasPlayed = true;
+    startHasPlayed = true;
 
-        startVideo.play().catch(() => {
-          startHasPlayed = false;
-        });
+    startVideo.play().then(() => {
+      // 成功播放後停止偵測
+      observer.disconnect();
+    }).catch(() => {
+      // 播放失敗時允許再次觸發
+      startHasPlayed = false;
+    });
 
-        window.removeEventListener(
-          "scroll",
-          scrollListener
-        );
-      }
-    };
+  }
 
-    window.addEventListener(
-      "scroll",
-      scrollListener
-    );
+}, {
+  threshold: 0.5
+});
 
-    scrollListener();
+// 開始監測整個廣告區塊
+observer.observe(document.getElementById("banner"));
 
     /* Start 播放結束 */
     startVideo.addEventListener("ended", () => {
