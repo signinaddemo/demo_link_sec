@@ -108,13 +108,10 @@
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 9999;
-
       display: none;
-
       width: 64px;
       height: 64px;
       pointer-events: none;
-
       animation: move 1s linear infinite;
     }
 
@@ -143,7 +140,7 @@
   <div class="banner" id="banner">
 
     <!-- Start 開場影片 -->
-    <video muted playsinline id="startVideo">
+    <video muted playsinline preload="auto" id="startVideo">
       <source src="./images/623/start.mp4"
               type="video/mp4">
       Your browser does not support the video tag.
@@ -192,7 +189,7 @@
 
       </div>
 
-      <!-- 手指圖示：只保留一個 -->
+      <!-- 手指圖示 -->
       <img
         src="./images/finger.png"
         alt=""
@@ -232,6 +229,9 @@
        style="display:block; width:100%;">
 
   <script>
+    const banner =
+      document.getElementById("banner");
+
     const startVideo =
       document.getElementById("startVideo");
 
@@ -256,13 +256,8 @@
     const swiper = new Swiper("#swiperContainer", {
       effect: "creative",
       grabCursor: true,
-
-      // 持續循環
       loop: true,
-
       spaceBetween: 10,
-
-      // 換 Cut 動畫 0.5 秒
       speed: 500,
 
       creativeEffect: {
@@ -281,45 +276,83 @@
       }
     });
 
-    /* Start 播放時，手指隱藏 */
+    /* Start 播放前的初始狀態 */
+    startVideo.pause();
     finger.style.display = "none";
 
-    /* 捲動到廣告區域時播放 Start */
+    /* 使用者滑到廣告位置才開始播放 Start */
     let startHasPlayed = false;
+    let userHasScrolled = false;
+    let adIsVisible = false;
 
-    const scrollListener = () => {
+    let lastScrollY = window.scrollY;
 
-      if (startHasPlayed) return;
-
-      const rect =
-        startVideo.getBoundingClientRect();
-
-      const screenH = window.innerHeight;
+    function tryStartVideo() {
 
       if (
-        rect.top < screenH - rect.height / 2 &&
-        rect.top > -(rect.height / 2)
+        startHasPlayed ||
+        !userHasScrolled ||
+        !adIsVisible
       ) {
+        return;
+      }
 
-        startHasPlayed = true;
+      startHasPlayed = true;
 
-        startVideo.play().catch(() => {
-          startHasPlayed = false;
-        });
+      startVideo.play().then(() => {
+
+        // 成功播放後停止監測
+        observer.disconnect();
 
         window.removeEventListener(
           "scroll",
-          scrollListener
+          onUserScroll
         );
+
+      }).catch(() => {
+
+        // 播放失敗時允許再次嘗試
+        startHasPlayed = false;
+
+      });
+    }
+
+    /* 偵測使用者向下滑動 */
+    function onUserScroll() {
+
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY) {
+        userHasScrolled = true;
       }
-    };
+
+      lastScrollY = currentScrollY;
+
+      tryStartVideo();
+    }
 
     window.addEventListener(
       "scroll",
-      scrollListener
+      onUserScroll,
+      { passive: true }
     );
 
-    scrollListener();
+    /* 偵測廣告可視比例 */
+    const observer = new IntersectionObserver((entries) => {
+
+      const entry = entries[0];
+
+      // 廣告至少 50% 進入畫面
+      adIsVisible =
+        entry.intersectionRatio >= 0.5;
+
+      tryStartVideo();
+
+    }, {
+      threshold: [0, 0.5, 1]
+    });
+
+    observer.observe(banner);
 
     /* Start 播放結束 */
     startVideo.addEventListener("ended", () => {
@@ -332,7 +365,7 @@
       swiper.update();
       swiper.slideToLoop(0, 0);
 
-      // 3. 移除 Start，立即顯示 BN
+      // 3. 移除 Start
       startVideo.remove();
 
       // 4. 第一張 BN 顯示手指
@@ -347,7 +380,6 @@
         // 第一次換 Cut 時隱藏手指
         finger.style.display = "none";
 
-        // 切換下一張 BN
         swiper.slideNext();
 
       }, 2000);
