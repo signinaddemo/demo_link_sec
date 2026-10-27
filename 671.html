@@ -356,7 +356,7 @@
       // 5. 下方影片開始播放
       video.play().catch(() => {});
 
-      // 6. 每 2 秒切換下一張 BN
+      // 6. 每5秒切換下一張 BN
       autoSlideTimer = setInterval(() => {
 
         // 第一次換 Cut 時隱藏手指
@@ -364,7 +364,7 @@
 
         swiper.slideNext();
 
-      }, 2000);
+      }, 5000);
 
     });
 
