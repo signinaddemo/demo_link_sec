@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>content-gallery h5 template</title>
+
+  <link rel="stylesheet"
+        href="https://unpkg.com/swiper@11/swiper-bundle.min.css">
+
+  <script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: transparent;
+    }
+
+    /* 整體廣告：640 × 960 */
+    .banner {
+      width: 100%;
+      aspect-ratio: 640 / 960;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Start 開場影片 */
+    #startVideo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+      z-index: 100;
+    }
+
+    /* BN 輪播區：640 × 600 */
+    #swiperContainer {
+      width: 100%;
+      height: 62.5%;
+      position: relative;
+      overflow: hidden;
+      display: none;
+    }
+
+    .swiper-slide {
+      overflow: hidden;
+    }
+
+    .swiper-slide-img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      object-fit: fill;
+    }
+
+    .swiper-slide-shadow {
+      opacity: 1 !important;
+      background: transparent !important;
+      box-shadow:
+        15px 0px 5px 0px rgba(0,0,0,0.4) !important;
+    }
+
+    /* 下方影片：640 × 360 */
+    #videoContainer {
+      width: 100%;
+      height: 37.5%;
+      position: relative;
+      display: none;
+    }
+
+    #video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 手指左右移動動畫 */
+    @keyframes move {
+      0% {
+        left: 55%;
+      }
+      50% {
+        left: 45%;
+      }
+      100% {
+        left: 55%;
+      }
+    }
+
+    /* 手指圖示：預設隱藏 */
+    #finger {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      display: none;
+      width: 64px;
+      height: 64px;
+      pointer-events: none;
+      animation: move 1s linear infinite;
+    }
+
+    /* 聲音開關 */
+    #muteButton {
+      position: absolute;
+      bottom: 16px;
+      right: 10px;
+      width: 24px;
+      height: 24px;
+      z-index: 10;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 上方背景 -->
+  <img src="./images/background0.png"
+       style="display:block; width:100%;">
+
+  <img src="./images/background1.png"
+       style="display:block; width:100%;">
+
+  <div class="banner" id="banner">
+
+    <!-- Start 開場影片 -->
+    <video muted playsinline preload="auto" id="startVideo">
+      <source src="./images/671/start.mp4"
+              type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <!-- BN 輪播區 -->
+    <div class="swiper-container" id="swiperContainer">
+
+      <div class="swiper-wrapper">
+
+        <!-- 第一張 BN -->
+        <div class="swiper-slide">
+          <img
+            class="swiper-slide-img"
+            src="./images/671/1.png"
+            alt=""
+            onclick="openUrl('https://www.twtoto.com.tw')">
+        </div>
+
+        <!-- 第二張 BN -->
+        <div class="swiper-slide">
+          <img
+            class="swiper-slide-img"
+            src="./images/671/2.png"
+            alt=""
+            onclick="openUrl('https://www.twtoto.com.tw')">
+        </div>
+
+      </div>
+
+      <!-- 手指圖示 -->
+      <img
+        src="./images/finger.png"
+        alt=""
+        id="finger">
+
+    </div>
+
+    <!-- 下方影片 -->
+    <div id="videoContainer">
+
+      <video
+        muted
+        playsinline
+        loop
+        id="video"
+        onclick="openUrl('https://www.twtoto.com.tw')">
+
+        <source src="./images/671/v.mp4"
+                type="video/mp4">
+
+        Your browser does not support the video tag.
+      </video>
+
+      <!-- 聲音開關 -->
+      <img
+        onclick="muteButtonOnClick()"
+        src="./images/mute.png"
+        alt="聲音開關"
+        id="muteButton">
+
+    </div>
+
+  </div>
+
+  <!-- 下方背景 -->
+  <img src="./images/background2.png"
+       style="display:block; width:100%;">
+
+  <script>
+    const banner =
+      document.getElementById("banner");
+
+    const startVideo =
+      document.getElementById("startVideo");
+
+    const video =
+      document.getElementById("video");
+
+    const muteButton =
+      document.getElementById("muteButton");
+
+    const finger =
+      document.getElementById("finger");
+
+    const videoContainer =
+      document.getElementById("videoContainer");
+
+    const swiperContainer =
+      document.getElementById("swiperContainer");
+
+    let autoSlideTimer = null;
+
+    /* 初始化 Swiper */
+    const swiper = new Swiper("#swiperContainer", {
+      effect: "creative",
+      grabCursor: true,
+      loop: true,
+      spaceBetween: 10,
+      speed: 500,
+
+      creativeEffect: {
+        limitProgress: 3,
+        shadowPerProgress: true,
+
+        prev: {
+          translate: ["-120%", 0, 0],
+          rotate: [0, 0, 10],
+          shadow: true
+        },
+
+        next: {
+          translate: ["0%", 0, -500]
+        }
+      }
+    });
+
+    /* Start 播放前的初始狀態 */
+    startVideo.pause();
+    finger.style.display = "none";
+
+    /* 使用者滑到廣告位置才開始播放 Start */
+    let startHasPlayed = false;
+    let userHasScrolled = false;
+    let adIsVisible = false;
+
+    let lastScrollY = window.scrollY;
+
+    function tryStartVideo() {
+
+      if (
+        startHasPlayed ||
+        !userHasScrolled ||
+        !adIsVisible
+      ) {
+        return;
+      }
+
+      startHasPlayed = true;
+
+      startVideo.play().then(() => {
+
+        // 成功播放後停止監測
+        observer.disconnect();
+
+        window.removeEventListener(
+          "scroll",
+          onUserScroll
+        );
+
+      }).catch(() => {
+
+        // 播放失敗時允許再次嘗試
+        startHasPlayed = false;
+
+      });
+    }
+
+    /* 偵測使用者向下滑動 */
+    function onUserScroll() {
+
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY) {
+        userHasScrolled = true;
+      }
+
+      lastScrollY = currentScrollY;
+
+      tryStartVideo();
+    }
+
+    window.addEventListener(
+      "scroll",
+      onUserScroll,
+      { passive: true }
+    );
+
+    /* 偵測廣告可視比例 */
+    const observer = new IntersectionObserver((entries) => {
+
+      const entry = entries[0];
+
+      // 廣告至少 50% 進入畫面
+      adIsVisible =
+        entry.intersectionRatio >= 0.5;
+
+      tryStartVideo();
+
+    }, {
+      threshold: [0, 0.5, 1]
+    });
+
+    observer.observe(banner);
+
+    /* Start 播放結束 */
+    startVideo.addEventListener("ended", () => {
+
+      // 1. 顯示 BN 與下方影片
+      swiperContainer.style.display = "block";
+      videoContainer.style.display = "block";
+
+      // 2. 更新 Swiper 並回到第一張
+      swiper.update();
+      swiper.slideToLoop(0, 0);
+
+      // 3. 移除 Start
+      startVideo.remove();
+
+      // 4. 第一張 BN 顯示手指
+      finger.style.display = "block";
+
+      // 5. 下方影片開始播放
+      video.play().catch(() => {});
+
+      // 6. 每 2 秒切換下一張 BN
+      autoSlideTimer = setInterval(() => {
+
+        // 第一次換 Cut 時隱藏手指
+        finger.style.display = "none";
+
+        swiper.slideNext();
+
+      }, 2000);
+
+    });
+
+    /* 聲音開關 */
+    function muteButtonOnClick() {
+
+      video.muted = !video.muted;
+
+      muteButton.src =
+        `./images/${video.muted ? "mute" : "volume"}.png`;
+    }
+
+    /* 點擊導連 */
+    function openUrl(url) {
+      window.open(url);
+    }
+
+  </script>
+
+</body>
+</html>
