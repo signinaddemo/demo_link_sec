@@ -65,38 +65,26 @@
     </div>
   </body>
   <script>
-    const ad = document.getElementById("ad");
-    const video = document.getElementById("video");
-    const firstCutDuration = 3;
+  const ad = document.getElementById("ad");
+  const video = document.getElementById("video");
+  const firstCutDuration = 3;
 
-    setTimeout(() => {
-      // mute button 已移除，這裡不再顯示任何按鈕
-    }, firstCutDuration * 1000);
+  setTimeout(() => {
+    // mute button 已移除，這裡不再顯示任何按鈕
+  }, firstCutDuration * 1000);
 
-    video.addEventListener("ended", () => {
-      video.currentTime = firstCutDuration;
-      video.play();
-    });
+  // 影片播放結束後，直接停留在最後畫面，不做任何重播操作
+  video.addEventListener("ended", () => {
+    video.pause(); // 確保影片停留在最後一影格
+  });
 
-    const closeOnClick = () => {
-      ad.remove();
-    };
+  const closeOnClick = () => {
+    ad.remove();
+  };
 
-    const openAd = () => {
-      window.open("https://www.duluxtaiwan.com.tw/default.aspx");
-    };
-
-      let hasLoopStarted = false;
-
-      // 第一次播放完畢，從第 7 秒開始無限播放
-      video.addEventListener("ended", () => {
-        if (!hasLoopStarted) {
-          hasLoopStarted = true;
-        }
-        // 每次播放完跳回第 9 秒並再次播放（手動模擬 loop）
-        video.currentTime = 9;
-        video.play();
-      });
-    </script>
+  const openAd = () => {
+    window.open("https://www.duluxtaiwan.com.tw/default.aspx");
+  };
+</script>
   </body>
 </html>
