@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>變形小金剛－影音廣告</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* 廣告固定在畫面底部 */
+    #ad-wrapper {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 9999;
+    }
+
+    /* 影片容器 */
+    #videoContainer {
+      display: block;
+      width: 100%;
+      position: relative;
+    }
+
+    /* 主影片 */
+    #video {
+      display: block;
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
+
+    /* 聲音按鈕：右下角 */
+    #muteButton {
+      position: absolute;
+      bottom: 16px;
+      right: 10px;
+      width: 24px;
+      height: 24px;
+      z-index: 10;
+      cursor: pointer;
+    }
+
+    /* 關閉按鈕：右上角 */
+    #close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 24px;
+      height: 24px;
+      z-index: 10;
+      cursor: pointer;
+    }
+
+    /* 背景圖片 */
+    .background {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- 背景圖片 -->
+  <img src="./images/background0.png"
+       class="background" alt="">
+
+  <img src="./images/background1.png"
+       class="background" alt="">
+
+  <img src="./images/background2.png"
+       class="background" alt="">
+
+  <!-- 廣告區域 -->
+  <div id="ad-wrapper">
+
+    <div id="videoContainer">
+
+      <!-- 主影片 -->
+      <video
+        id="video"
+        autoplay
+        muted
+        playsinline
+        loop
+        preload="auto"
+        onclick="openUrl()">
+
+        <source
+          src="./images/676/video.mp4"
+          type="video/mp4">
+
+        Your browser does not support the video tag.
+
+      </video>
+
+      <!-- 聲音按鈕 -->
+      <img
+        id="muteButton"
+        src="./images/mute.png"
+        alt="聲音開關"
+        onclick="muteButtonOnClick()">
+
+      <!-- 關閉按鈕 -->
+      <img
+        id="close"
+        src="./images/close.png"
+        alt="關閉廣告"
+        onclick="closeAd()">
+
+    </div>
+
+  </div>
+
+  <script>
+
+    /* 取得元素 */
+    const adWrapper =
+      document.getElementById("ad-wrapper");
+
+    const video =
+      document.getElementById("video");
+
+    const muteButton =
+      document.getElementById("muteButton");
+
+    /* 預設靜音 */
+    video.muted = true;
+
+    /* 播放影片 */
+    video.play().catch((error) => {
+      console.warn("影片播放失敗：", error);
+    });
+
+    /* 聲音開關 */
+    function muteButtonOnClick() {
+
+      video.muted = !video.muted;
+
+      muteButton.src =
+        `./images/${video.muted ? "mute" : "volume"}.png`;
+
+    }
+
+    /* 點擊影片導連 */
+    function openUrl() {
+
+      window.open(
+        "https://lihi1.com/7pw8P",
+        "_blank"
+      );
+
+    }
+
+    /* 關閉廣告 */
+    function closeAd() {
+
+      video.pause();
+      adWrapper.remove();
+
+    }
+
+  </script>
+
+</body>
+</html>
